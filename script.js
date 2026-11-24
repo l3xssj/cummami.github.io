@@ -5,21 +5,38 @@
   const STORE = 'toni-birthday-gift-v1';
   const initial = { opened: [], coupons: [], experiences: [], movies: [], wishes: [], journal: [], evening: [] };
   let state;
-  try { state = { ...initial, ...JSON.parse(localStorage.getItem(STORE) || '{}') }; } catch { state = { ...initial }; }
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORE) || '{}');
+    state = { ...initial, ...(stored && typeof stored === 'object' && !Array.isArray(stored) ? stored : {}) };
+  } catch { state = { ...initial }; }
+  for (const key of Object.keys(initial)) if (!Array.isArray(state[key])) state[key] = [];
   const save = () => { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch { toast('No se pudo guardar en este navegador.'); } };
   const toast = (text) => { const el = $('#toast'); el.textContent = text; el.classList.add('show'); clearTimeout(toast.timer); toast.timer = setTimeout(() => el.classList.remove('show'), 2600); };
   const escapeHTML = (text) => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   const gifts = [
-    ['Una carta especial','✉','leer'],['Vale para un paseo','↗','paseo'],['Ruleta de experiencias','◉','ruleta'],['Flores para ti','✿','flores'],['Un mensaje bonito','“','mensaje'],['Tarde de cine','▣','cine'],['Sorpresa musical','♫','musica'],['Tarde juntos','♡','juntos'],['Trivial sin presión','?','trivial'],['Mensajes secretos','▤','secreto'],['Pasaporte de planes','⌖','pasaporte'],['Un plan al azar','✳','plan'],['Chistes malos','☻','chiste'],['Reto exprés','⚡','reto'],['Tarde de música','♪','tarde-musica'],['Tú eliges el plan','☷','elige'],['Cápsula del tiempo','◷','capsula'],['Lista de deseos','☆','deseos'],['Un minuto de calma','◌','calma'],['Ruleta de cine','▰','pelicula'],['Humor de madre','☺','boomer'],['Frase para hoy','✧','positiva'],['Vale de ayuda','⌂','ayuda'],['Mini reto divertido','➜','mini-reto'],['Una sorpresa cambiante','✹','sorpresa'],['Dedicatoria final','♥','final']
+    ['Una carta especial','✉','leer'],['Vale para un paseo','↗','paseo'],['Ruleta de experiencias','◉','ruleta'],['Flores para ti','✿','flores'],['Un mensaje bonito','“','mensaje'],['Tarde de cine','▣','cine'],['Sorpresa musical','♫','musica'],['Tarde juntas','♡','juntas'],['Trivial sin presión','?','trivial'],['Mensajes secretos','▤','secreto'],['Pasaporte de planes','⌖','pasaporte'],['Un plan al azar','✳','plan'],['Chistes malos','☻','chiste'],['Reto exprés','⚡','reto'],['Tarde de música','♪','tarde-musica'],['Tú eliges el plan','☷','elige'],['Cápsula del tiempo','◷','capsula'],['Lista de deseos','☆','deseos'],['Un minuto de calma','◌','calma'],['Ruleta de cine','▰','pelicula'],['Humor de madre','☺','boomer'],['Frase para hoy','✧','positiva'],['Vale de ayuda','⌂','ayuda'],['Mini reto divertido','➜','mini-reto'],['Una sorpresa cambiante','✹','sorpresa'],['Dedicatoria final','♥','final']
   ];
   const coupons = [
-    ['Un paseo donde tú elijas','Tú decides el rumbo y yo pongo la compañía.'],['Una tarde juntos','Una tarde para compartir sin mirar el reloj.'],['Una tarde musical','Elegimos música y la escuchamos juntos.'],['Elegir la película','Tu elección, sin debate sobre el mando.'],['Cine en casa','Película, sofá y plan a tu gusto.'],['Una tarde de relax','Hoy el plan es bajar el ritmo.'],['Actividad sorpresa','Yo preparo una actividad y tú decides cuándo.'],['Un día sin preocupaciones','Me encargo de una tarea que te venga bien.'],['Ayuda con algo','Canjeable por una mano extra cuando quieras.'],['Una conversación sin prisas','Un rato para hablar de lo que te apetezca.'],['Un plan organizado','Tú eliges el estilo; yo me encargo de organizarlo.'],['Una tarde de risas','Comedia, chistes malos o lo que nos haga reír.'],['Próxima aventura','Tú escoges nuestra siguiente salida.'],['Una tarde de series','Tú eliges qué vemos y cuánto vemos.'],['Sorpresa preparada en casa','Un pequeño plan hecho con cariño.'],['Un abrazo cuando quieras','Válido sin fecha ni motivo.'],['Escuchar música juntos','Tu playlist y un rato para disfrutarla.'],['Un paseo especial','Un paseo sin destino fijo y a tu ritmo.'],['Algo que te haga ilusión','Cuéntame qué te apetece y lo hacemos posible.'],['Una tarde sin prisas','Sin agenda, sin apuro y contigo al mando.'],['Elegir qué hacemos','Hoy la última palabra es tuya.'],['Una tarde diferente','Un plan nuevo, elegido entre las dos.'],['Un día dedicado a ti','Un día con actividades elegidas por ti.'],['Una pequeña aventura','Salir a explorar algo distinto, cerca o lejos.'],['Una experiencia especial','La pensamos juntos y la hacemos realidad.']
+    ['Un paseo donde tú elijas','Tú decides el rumbo y yo pongo la compañía.'],['Una tarde juntas','Una tarde para compartir sin mirar el reloj.'],['Una tarde musical','Elegimos música y la escuchamos juntas.'],['Elegir la película','Tu elección, sin debate sobre el mando.'],['Cine en casa','Película, sofá y plan a tu gusto.'],['Una tarde de relax','Hoy el plan es bajar el ritmo.'],['Actividad sorpresa','Yo preparo una actividad y tú decides cuándo.'],['Un día sin preocupaciones','Me encargo de una tarea que te venga bien.'],['Ayuda con algo','Canjeable por una mano extra cuando quieras.'],['Una conversación sin prisas','Un rato para hablar de lo que te apetezca.'],['Un plan organizado','Tú eliges el estilo; yo me encargo de organizarlo.'],['Una tarde de risas','Comedia, chistes malos o lo que nos haga reír.'],['Próxima aventura','Tú escoges nuestra siguiente salida.'],['Una tarde de series','Tú eliges qué vemos y cuánto vemos.'],['Sorpresa preparada en casa','Un pequeño plan hecho con cariño.'],['Un abrazo cuando quieras','Válido sin fecha ni motivo.'],['Escuchar música juntas','Tu playlist y un rato para disfrutarla.'],['Un paseo especial','Un paseo sin destino fijo y a tu ritmo.'],['Algo que te haga ilusión','Cuéntame qué te apetece y lo hacemos posible.'],['Una tarde sin prisas','Sin agenda, sin apuro y contigo al mando.'],['Elegir qué hacemos','Hoy la última palabra es tuya.'],['Una tarde diferente','Un plan nuevo, elegido entre las dos.'],['Un día dedicado a ti','Un día con actividades elegidas por ti.'],['Una pequeña aventura','Salir a explorar algo distinto, cerca o lejos.'],['Una experiencia especial','La pensamos juntas y la hacemos realidad.']
   ];
-  const passport = ['Dar un paseo sin prisa','Escuchar un álbum de principio a fin','Ver una película elegida por ti','Descubrir un sitio nuevo','Hacer un plan improvisado','Tener una tarde de desconexión','Reírnos con algo muy malo','Compartir una tarde juntos'];
+  const passport = ['Dar un paseo sin prisa','Escuchar un álbum de principio a fin','Ver una película elegida por ti','Descubrir un sitio nuevo','Hacer un plan improvisado','Tener una tarde de desconexión','Reírnos con algo muy malo','Compartir una tarde juntas'];
   const activities = ['Paseo tranquilo','Música favorita','Película en casa','Merienda sin prisa','Salir a descubrir','Una buena conversación'];
-  const plans = ['Paseo por un lugar nuevo y parada para tomar algo.','Tarde de cine en casa: tú eliges la película y yo preparo el ambiente.','Ponemos tu playlist y cada una elige una canción para compartir.','Un rato sin pantallas, con charla y algo rico para picar.','Salimos a dar una vuelta y dejamos que el camino elija el plan.','Una tarde de descanso: música suave, sofá y cero obligaciones.','Buscamos un concierto o actividad que nos apetezca y lo planeamos juntos.','Elige una receta sencilla y hacemos una merienda especial.','Ruta corta, fotos del paisaje si apetece y regreso sin mirar la hora.','Tarde de comedia romántica y debate amable sobre el final.'];
+  const plans = ['Paseo por un lugar nuevo y parada para tomar algo.','Tarde de cine en casa: tú eliges la película y yo preparo el ambiente.','Ponemos tu playlist y cada una elige una canción para compartir.','Un rato sin pantallas, con charla y algo rico para picar.','Salimos a dar una vuelta y dejamos que el camino elija el plan.','Una tarde de descanso: música suave, sofá y cero obligaciones.','Buscamos un concierto o actividad que nos apetezca y lo planeamos juntas.','Elige una receta sencilla y hacemos una merienda especial.','Ruta corta, fotos del paisaje si apetece y regreso sin mirar la hora.','Tarde de comedia romántica y debate amable sobre el final.'];
   const positive = ['No hace falta tenerlo todo resuelto para disfrutar de un buen momento.','Un día tranquilo también puede ser un día estupendo.','Siempre hay sitio para una canción que te cambie el ánimo.','Los planes sencillos también se convierten en recuerdos bonitos.','Hoy puedes ir a tu ritmo. Ese también es un buen ritmo.','Mereces un rato solo para disfrutar.'];
+  const conversationQuestions = ['¿Qué plan sencillo te gustaría repetir algún día?','¿Qué canción te apetece escuchar ahora mismo?','¿Te apetece más una tarde de paseo, música o película?','¿Qué lugar cercano te gustaría descubrir juntas?','¿Qué hace que una tarde normal se convierta en una tarde bonita?','¿Qué película romántica o de adolescentes te gustaría volver a ver?','Si hoy no hubiera prisa, ¿cómo sería tu tarde ideal?','¿Qué concierto o artista te gustaría tener la oportunidad de ver?','¿Qué comida o merienda pegaría con una tarde de cine?','¿Qué pequeño plan podríamos improvisar esta semana?','¿Prefieres un paseo con destino o dejar que el camino nos sorprenda?','¿Qué canción pondrías para empezar un día con buen ánimo?','¿Qué experiencia nueva te gustaría probar a tu ritmo?','¿Qué detalle sencillo te alegra un día?','¿Qué plan te gustaría guardar para un día especial?','¿Qué género de película te apetece últimamente?'];
+
+  // Descarta datos antiguos o dañados para que no rompan los renderizados.
+  state.opened=[...new Set(state.opened.filter(n=>Number.isInteger(n)&&n>=1&&n<=gifts.length))];
+  state.coupons=[...new Set(state.coupons.filter(i=>Number.isInteger(i)&&i>=0&&i<coupons.length))];
+  state.experiences=[...new Set(state.experiences.filter(i=>Number.isInteger(i)&&i>=0&&i<passport.length))];
+  state.evening=[...new Set(state.evening.filter(i=>Number.isInteger(i)&&i>=0&&i<activities.length))];
+  state.movies=state.movies.filter(m=>m&&typeof m==='object'&&typeof m.title==='string').map(m=>({title:m.title.slice(0,80),category:typeof m.category==='string'?m.category:'Otra',watched:Boolean(m.watched)}));
+  state.wishes=state.wishes.filter(x=>typeof x==='string').map(x=>x.slice(0,100));
+  state.journal=state.journal.filter(x=>x&&typeof x==='object'&&typeof x.text==='string').map(x=>({text:x.text.slice(0,400),date:typeof x.date==='string'?x.date:''}));
+
+  $('#conversationPrompt').textContent=conversationQuestions[0];
+  $('#nextQuestion').addEventListener('click',()=>{const current=$('#conversationPrompt').textContent;const options=conversationQuestions.filter(q=>q!==current);$('#conversationPrompt').textContent=options[Math.floor(Math.random()*options.length)];});
 
   function renderGifts(){ $('#giftGrid').innerHTML = gifts.map(([title,icon],i)=>`<button class="gift-tile ${state.opened.includes(i+1)?'is-opened':''}" data-gift="${i+1}" aria-label="Abrir regalo ${i+1}: ${title}"><span class="tile-num">REGALO ${String(i+1).padStart(2,'0')}</span><span class="tile-icon" aria-hidden="true">${icon}</span><strong>${title}</strong><span class="tile-open">${state.opened.includes(i+1)?'Volver a abrir ↗':'Descubrir ↗'}</span></button>`).join('');$('#giftProgress').textContent=`${state.opened.length} de 26 descubiertos`; }
   function renderCoupons(){ $('#couponGrid').innerHTML=coupons.map(([title,desc],i)=>`<article class="coupon-card ${state.coupons.includes(i)?'redeemed':''}"><span class="coupon-no">VALE Nº ${String(i+1).padStart(2,'0')}</span><h3>${escapeHTML(title)}</h3><p>${escapeHTML(desc)}</p><div class="coupon-bottom"><span>${state.coupons.includes(i)?'CANJEADO':'SIN CADUCIDAD'}</span><button data-coupon="${i}">${state.coupons.includes(i)?'Deshacer':'Canjear ↗'}</button></div></article>`).join('');$('#couponCount').textContent=`${coupons.length-state.coupons.length} vales disponibles`; }
@@ -42,7 +59,7 @@
       case 'mensaje': return {title:'Un mensaje solo para hoy',text:'Pulsa para recibir una frase bonita. Puedes volver a generar otra cuando quieras.',action:'Generar mensaje',button:'data-generate-positive'};
       case 'cine': return {title:'Una tarde de cine',text:'Elige película, prepara algo para picar y haz de la pausa una parte del plan.',action:'Preparar noche de cine',button:'data-cinema-night'};
       case 'musica': return {title:'Una canción para el momento',text:'Abre tu playlist y deja que la música elija el ambiente. Sin reproducción automática, siempre a tu ritmo.',action:'Abrir tu rincón musical',button:'data-go="musica"'};
-      case 'juntos': return {title:'Vale por una tarde juntos',text:'Canjeable cuando quieras. El plan lo eliges tú y el tiempo lo ponemos las dos.',action:'Guardar este vale',button:'data-quick-coupon="1"'};
+      case 'juntas': return {title:'Vale por una tarde juntas',text:'Canjeable cuando quieras. El plan lo eliges tú y el tiempo lo ponemos las dos.',action:'Guardar este vale',button:'data-quick-coupon="1"'};
       case 'trivial': return {title:'Trivial tecnológico',text:'Pregunta: ¿qué suele arreglar muchos problemas de tecnología?',quiz:true};
       case 'secreto': return {title:'Un mensaje secreto',text:'No hace falta una ocasión especial para que alguien te recuerde lo mucho que te quiere.',highlight:'Si has llegado hasta aquí, ya has encontrado el secreto: eres muy querida.'};
       case 'pasaporte': return {title:'Tu pasaporte de experiencias',text:'Marca las pequeñas aventuras que hagas en la sección de experiencias. Sin prisas ni fechas límite.',action:'Ver tu pasaporte',button:'data-go="experiencias"'};
@@ -94,10 +111,76 @@
     const exp=e.target.closest('[data-experience]');if(exp){const i=Number(exp.dataset.experience);state.experiences=exp.checked?[...state.experiences,i]:state.experiences.filter(x=>x!==i);save();renderPassport();return;}
   });
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('is-open'))closeModal();if(e.key==='Escape'){$('#mainNav').classList.remove('is-open');$('#menuToggle').setAttribute('aria-expanded','false');}});
-  $('#spinButton').addEventListener('click',()=>{if($('#spinButton').disabled)return;const labels=['Paseo','Música','Cine','Relax','Risas','Aventura'];const index=Math.floor(Math.random()*labels.length),wheel=$('#experienceWheel');wheel.style.transform=`rotate(${1440+index*60+Math.random()*35}deg)`;$('#spinButton').disabled=true;$('#wheelResult').textContent='La ruleta está pensando…';setTimeout(()=>{$('#wheelResult').textContent=`${labels[index]}: ${plans[index]}`;$('#spinButton').disabled=false;},4100);});
-  const moods={salir:'Plan para salir: paseo a tu ritmo por un sitio distinto, con una parada donde te apetezca.',descansar:'Plan de descanso: música tranquila, una bebida rica y una tarde sin obligaciones.',musica:'Plan musical: abre tu playlist, ponte cómoda y elige una canción para escuchar con atención.',reir:'Plan para reír: elige una comedia o deja que el generador boomer haga su trabajo.',cine:'Plan de peli: decide el género, prepara algo para picar y elige tú el título.',juntos:'Plan acompañada: escoge un vale del talonario y montamos algo juntos.'};
+  let wheelAngle=0;
+  let wheelAnimation=null;
+  let wheelWatchdog=0;
+  let wheelSpinId=0;
+  const spinButton=$('#spinButton');
+  const wheelLabels=['Paseo sin prisa juntas','Música para compartir','Cine romántico en casa','Tarde de relax sin reloj','Concierto o plan musical','Pequeña aventura juntas'];
+  const wheelDescriptions=[
+    'Paseo por un lugar nuevo y una parada donde te apetezca.',
+    'Ponemos tu playlist y elegimos canciones para escuchar juntas.',
+    'Tú eliges una película romántica y preparamos algo rico.',
+    'Una tarde tranquila, a tu ritmo y sin obligaciones.',
+    'Buscamos un concierto o plan musical que te apetezca.',
+    'Elegimos una pequeña aventura y decidimos el rumbo juntas.'
+  ];
+  function finishWheelSpin(id,index,end){
+    if(id!==wheelSpinId)return;
+    clearTimeout(wheelWatchdog);
+    const wheel=$('#experienceWheel');
+    wheelAngle=((end%360)+360)%360;
+    wheel.style.transform=`rotate(${wheelAngle}deg)`;
+    wheel.style.transition='none';
+    if(wheelAnimation){wheelAnimation.onfinish=null;wheelAnimation.cancel();wheelAnimation=null;}
+    spinButton.disabled=false;
+    spinButton.removeAttribute('aria-busy');
+    $('#wheelResult').textContent=`${wheelLabels[index]}: ${wheelDescriptions[index]}`;
+  }
+  spinButton.addEventListener('click',()=>{
+    if(spinButton.disabled)return;
+    const wheel=$('#experienceWheel');
+    const index=Math.floor(Math.random()*wheelLabels.length);
+    const target=(330-index*60+360)%360;
+    const start=wheelAngle;
+    const end=start+1800+((target-start%360+360)%360);
+    const id=++wheelSpinId;
+    spinButton.disabled=true;
+    spinButton.setAttribute('aria-busy','true');
+    $('#wheelResult').textContent='La ruleta está girando…';
+
+    if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){
+      finishWheelSpin(id,index,end);
+      return;
+    }
+
+    if(typeof wheel.animate==='function'){
+      try{
+        wheelAnimation=wheel.animate(
+          [{transform:`rotate(${start}deg)`},{transform:`rotate(${end}deg)`}],
+          {duration:2200,easing:'cubic-bezier(.12,.75,.12,1)'}
+        );
+        wheelAnimation.onfinish=()=>finishWheelSpin(id,index,end);
+      }catch{
+        wheelAnimation=null;
+      }
+    }
+    if(!wheelAnimation){
+      wheel.style.transition='none';
+      wheel.style.transform=`rotate(${start}deg)`;
+      void wheel.offsetWidth;
+      wheel.style.transition='transform 2.2s cubic-bezier(.12,.75,.12,1)';
+      wheel.style.transform=`rotate(${end}deg)`;
+    }
+    // Respaldo por si el navegador no emite el evento de fin de animación.
+    wheelWatchdog=setTimeout(()=>finishWheelSpin(id,index,end),2600);
+  });
+  const moods={salir:'Plan para salir: paseo a tu ritmo por un sitio distinto, con una parada donde te apetezca.',descansar:'Plan de descanso: música tranquila, una bebida rica y una tarde sin obligaciones.',musica:'Plan musical: abre tu playlist, ponte cómoda y elige una canción para escuchar con atención.',reir:'Plan para reír: elige una comedia o deja que el generador boomer haga su trabajo.',cine:'Plan de peli: decide el género, prepara algo para picar y elige tú el título.',juntos:'Plan acompañada: escoge un vale del talonario y montamos algo juntas.'};
   $('#moodChoices').addEventListener('click',e=>{const b=e.target.closest('[data-mood]');if(!b)return;$$('#moodChoices button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');$('#moodResult').textContent=moods[b.dataset.mood];});
   $('#planButton').addEventListener('click',()=>{$('#planResult').textContent=plans[Math.floor(Math.random()*plans.length)];});
+  const comboParts={place:['en un paseo sin rumbo','en casa con una película','en un sitio nuevo cerca','en una tarde tranquila'],sound:['con tu playlist favorita','con canciones elegidas por las dos','con música suave de fondo','con una canción para cada momento'],extra:['y una merienda rica','y una charla sin mirar el reloj','y una parada para tomar algo','y cero obligaciones']};
+  const pickRandom=list=>list[Math.floor(Math.random()*list.length)];
+  $('#comboPlanButton').addEventListener('click',()=>{$('#comboPlanResult').textContent=`Plan: ${pickRandom(comboParts.place)}, ${pickRandom(comboParts.sound)}, ${pickRandom(comboParts.extra)}.`;});
   $('#saveEvening').addEventListener('click',()=>{if(!state.evening.length){toast('Elige al menos una actividad primero.');return;}toast('Tu tarde está guardada en este dispositivo.');});
   $('#movieSpin').addEventListener('click',()=>{$('#movieGenre').textContent=['Romance','Comedia romántica','Adolescente','Para emocionarse','Divertida'][Math.floor(Math.random()*5)];});
   $('#movieForm').addEventListener('submit',e=>{e.preventDefault();const title=$('#movieTitle').value.trim();if(!title)return;state.movies.unshift({title,category:$('#movieCategory').value,watched:false});save();renderMovies();e.target.reset();$('#movieResult').textContent='Añadida a tu lista. ¡Buena elección!';});
@@ -108,12 +191,12 @@
   const excuses=['La aplicación está actualizando mi paciencia.','No es que no responda: estoy dejando que el mensaje madure.','El móvil estaba en silencio para que pudiera pensar mejor.','No me he perdido; estoy comprobando si el GPS sabe lo que hace.'];
   $('#excuseButton').addEventListener('click',()=>{$('#boomerResult').textContent=excuses[Math.floor(Math.random()*excuses.length)];});
   $('#boomerQuiz').addEventListener('click',()=>{$('#boomerResult').textContent='Pregunta: si el móvil se queda sin batería, ¿qué haces? A) Buscas el cargador. B) Lo pones cerca del router para que coja cobertura. C) Descansas un rato. Todas son respuestas válidas.';});
-  $('#diplomaButton').addEventListener('click',()=>openModal(shell('RECONOCIMIENTO OFICIAL','Diploma de madre legendaria',`<div class="modal-highlight">Se concede a Mama por su talento para estar pendiente, su capacidad para resolverlo todo y su derecho inalienable a decir «te lo dije».</div><p>Válido para siempre. No requiere impresora, aunque puedes hacer una captura si quieres guardarlo.</p>`,'<button class="button button-dark" data-close-modal>Recibir mi diploma <span>✳</span></button>')));
+  $('#diplomaButton').addEventListener('click',()=>openModal(shell('RECONOCIMIENTO OFICIAL','Diploma de madre legendaria',`<div class="modal-highlight">Se concede a Mamá por su talento para estar pendiente, su capacidad para resolverlo todo y su derecho inalienable a decir «te lo dije».</div><p>Válido para siempre. No requiere impresora, aunque puedes hacer una captura si quieres guardarlo.</p>`,'<button class="button button-dark" data-close-modal>Recibir mi diploma <span>✳</span></button>')));
   $('#journalForm').addEventListener('submit',e=>{e.preventDefault();const text=$('#journalEntry').value.trim();if(!text)return;state.journal.unshift({text,date:new Date().toLocaleDateString('es-ES')});save();renderLists();e.target.reset();toast('Nota guardada en tu diario.');});
   $('#wishForm').addEventListener('submit',e=>{e.preventDefault();const text=$('#wishEntry').value.trim();if(!text)return;state.wishes.unshift(text);save();renderLists();e.target.reset();toast('Deseo guardado.');});
   let breathing=false;$('#breathButton').addEventListener('click',()=>{if(breathing)return;breathing=true;const circle=$('#breathCircle'),label=$('#breathLabel'),button=$('#breathButton');button.disabled=true;let count=0;const cycle=()=>{if(count>=6){circle.classList.remove('breathing','exhale');label.textContent='lista';button.disabled=false;button.innerHTML='Empezar un minuto <span>↗</span>';breathing=false;toast('Un minuto para ti. Bien hecho.');return;}circle.classList.remove('exhale');circle.classList.add('breathing');label.textContent='inspira';setTimeout(()=>{circle.classList.add('exhale');label.textContent='suelta';},4000);setTimeout(()=>{count++;cycle();},8000);};button.textContent='Pausa en curso…';cycle();});
   $('#newQuote').addEventListener('click',()=>{$('#positiveQuote').textContent=positive[Math.floor(Math.random()*positive.length)];});
-  $('#secretButton').addEventListener('click',()=>toast('Pista secreta: prueba a escribir Mama con cariño.'));$('#footerSecret').addEventListener('click',()=>openModal(shell('UN ÚLTIMO DETALLE','Tu regalo no tiene fecha de cierre.',`<p>Puedes volver a esta página cuando quieras. Los planes, tu música y la carta seguirán aquí. Lo que guardes en listas y diarios permanece únicamente en este navegador.</p><div class="modal-highlight">Pista: la palabra secreta es Mama. Escríbela en la caja misteriosa. ♡</div>`,'<button class="button button-dark" data-close-modal>Me lo guardo <span>♡</span></button>')));
-  // A tiny keyboard-style secret without interfering with normal typing.
-  let secretKeys='';document.addEventListener('keydown',e=>{if(e.key.length===1){secretKeys=(secretKeys+e.key.toLocaleUpperCase('es')).slice(-4);if(secretKeys==='Mama'||secretKeys==='TONI'){toast('¡Código secreto encontrado! Feliz cumpleaños, Mama ✨');openGift(26);secretKeys='';}}});
+  $('#secretButton').addEventListener('click',()=>toast('Pista secreta: prueba a escribir TOÑI con cariño.'));$('#footerSecret').addEventListener('click',()=>openModal(shell('UN ÚLTIMO DETALLE','Tu regalo no tiene fecha de cierre.',`<p>Puedes volver a esta página cuando quieras. Los planes, tu música y la carta seguirán aquí. Lo que guardes en listas y diarios permanece únicamente en este navegador.</p><div class="modal-highlight">Pista: la palabra secreta es TOÑI. Escríbela en la caja misteriosa. ♡</div>`,'<button class="button button-dark" data-close-modal>Me lo guardo <span>♡</span></button>')));
+  // El código secreto solo escucha teclas fuera de campos de escritura.
+  let secretKeys='';document.addEventListener('keydown',e=>{if(e.key.length!==1||e.target.closest('input,textarea,select,[contenteditable="true"]'))return;secretKeys=(secretKeys+e.key.toLocaleUpperCase('es')).slice(-4);if(secretKeys==='MAMÁ'||secretKeys==='MAMA'){toast('¡Código secreto encontrado! Feliz cumpleaños, Mamá ✨');openGift(26);secretKeys='';}});
 })();
