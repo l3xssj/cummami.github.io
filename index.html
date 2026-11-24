@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f6f4f0">
-  <meta name="description" content="Una caja de regalos digital hecha con cariño para Toñi.">
-  <title>Para Toñi · 26 regalos y muchas experiencias</title>
+  <meta name="description" content="Una caja de regalos digital hecha con cariño para Mama.">
+  <title>Para Mama · 26 regalos y muchas experiencias</title>
   <link rel="preconnect" href="https://open.spotify.com">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
@@ -14,7 +14,7 @@
   <div class="intro" id="intro" aria-label="Bienvenida">
     <div class="intro-mark" aria-hidden="true">T<span>.</span></div>
     <p class="eyebrow">26 · 11 · 2026</p>
-    <h1>Esto es para ti,<br><em>Toñi.</em></h1>
+    <h1>Esto es para ti,<br><em>Mama.</em></h1>
     <p class="intro-copy">He preparado una pequeña caja llena de planes, música y cariño. Ábrela a tu ritmo.</p>
     <button class="button button-light" id="enterButton">Descubrir tu regalo <span aria-hidden="true">↗</span></button>
     <span class="intro-note">Hay 26 sorpresas esperando dentro</span>
@@ -22,7 +22,7 @@
   </div>
 
   <header class="site-header">
-    <a class="brand" href="#inicio" aria-label="Para Toñi, inicio"><span class="brand-symbol">t.</span><span>una caja para <strong>Toñi</strong></span></a>
+    <a class="brand" href="#inicio" aria-label="Para Mama, inicio"><span class="brand-symbol">t.</span><span>una caja para <strong>Mama</strong></span></a>
     <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">☰</button>
     <nav id="mainNav" class="main-nav" aria-label="Navegación principal">
       <a href="#regalos">Regalos</a><a href="#experiencias">Experiencias</a><a href="#vales">Vales</a><a href="#musica">Música</a><a href="#rincon">Tu rincón</a>
@@ -81,7 +81,7 @@
       <p class="local-note"><span>◉</span> Tus vales y avances se guardan solo en este navegador y dispositivo; no se sincronizan.</p>
     </section>
 
-    <section class="music-section" id="musica"><div class="section-wrap music-layout"><div class="music-copy"><p class="eyebrow">UN RINCÓN CON BANDA SONORA</p><h2>La banda sonora<br><em>de Toñi.</em></h2><p>Para cantar, pasear, descansar o simplemente darle al play. Tu playlist, lista para acompañar el momento.</p><div class="music-status"><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Tu música, a tu ritmo</span></div><a class="button button-dark" href="https://open.spotify.com/playlist/44EgIcFtsRdTvL8895D3OL" target="_blank" rel="noopener noreferrer">Abrir en Spotify <span>↗</span></a><p class="small-note">La reproducción no empieza automáticamente. Spotify puede pedirte iniciar sesión.</p></div><div class="player-frame"><div class="player-decoration"><span>PLAYLIST PERSONAL</span><span>♪</span></div><iframe title="Playlist de Spotify para Toñi" src="https://open.spotify.com/embed/playlist/44EgIcFtsRdTvL8895D3OL?utm_source=generator&theme=0" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe><div class="player-foot"><span>UNA CANCIÓN PUEDE CAMBIAR UNA TARDE</span><span>♫</span></div></div><div class="music-orb" aria-hidden="true">♪</div></div></section>
+    <section class="music-section" id="musica"><div class="section-wrap music-layout"><div class="music-copy"><p class="eyebrow">UN RINCÓN CON BANDA SONORA</p><h2>La banda sonora<br><em>de Mama.</em></h2><p>Para cantar, pasear, descansar o simplemente darle al play. Tu playlist, lista para acompañar el momento.</p><div class="music-status"><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Tu música, a tu ritmo</span></div><a class="button button-dark" href="https://open.spotify.com/playlist/44EgIcFtsRdTvL8895D3OL" target="_blank" rel="noopener noreferrer">Abrir en Spotify <span>↗</span></a><p class="small-note">La reproducción no empieza automáticamente. Spotify puede pedirte iniciar sesión.</p></div><div class="player-frame"><div class="player-decoration"><span>PLAYLIST PERSONAL</span><span>♪</span></div><iframe title="Playlist de Spotify para Mama" src="https://open.spotify.com/embed/playlist/44EgIcFtsRdTvL8895D3OL?utm_source=generator&theme=0" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe><div class="player-foot"><span>UNA CANCIÓN PUEDE CAMBIAR UNA TARDE</span><span>♫</span></div></div><div class="music-orb" aria-hidden="true">♪</div></div></section>
 
     <section class="section-wrap cinema-section" id="cine"><div class="section-heading"><div><p class="eyebrow">PALOMITAS OPCIONALES</p><h2>El cine lo <em>eliges tú.</em></h2></div><p class="section-aside">Sin recomendarte títulos a ciegas.<br>Tu lista, tus gustos, tu noche.</p></div><div class="cinema-layout"><div class="cinema-wheel-card"><span class="eyebrow">GÉNERO AL AZAR</span><div class="movie-ticket"><span>HOY EN CARTELERA</span><strong id="movieGenre">?</strong><i>✳</i></div><button id="movieSpin" class="button button-dark">Elegir género <span>↻</span></button></div><div class="movie-list-card"><div class="movie-list-head"><div><span class="eyebrow">TU LISTA PERSONAL</span><h3>Para una próxima noche</h3></div><span class="movie-count" id="movieCount">0 pendientes</span></div><form id="movieForm" class="movie-form"><label class="sr-only" for="movieTitle">Título de película</label><input id="movieTitle" maxlength="80" placeholder="Añade una película que te apetezca…" required><select id="movieCategory" aria-label="Categoría"><option>Romance</option><option>Comedia romántica</option><option>Adolescente</option><option>Para emocionarse</option><option>Divertida</option><option>Otra</option></select><button class="button button-dark button-small" type="submit">Añadir <span>＋</span></button></form><div class="movie-actions"><button class="text-button" id="randomMovie">Sorpréndeme con una pendiente ↗</button><button class="text-button" id="cinemaNight">Preparar noche de cine ↗</button></div><p class="recommendation" id="movieResult" aria-live="polite">Tu lista se queda guardada en este dispositivo.</p><ul class="movie-list" id="movieList"></ul></div></div></section>
 
@@ -92,7 +92,7 @@
     <section class="closing-section"><div class="closing-decoration">✳</div><p class="eyebrow">Y ESTO NO SE TERMINA HOY</p><h2>Feliz 54, <em>mamá.</em></h2><p>Que este año venga lleno de planes bonitos, canciones a buen volumen y tardes sin mirar el reloj.</p><button class="button button-dark" data-open-letter>Volver a tu carta <span>↗</span></button><span class="closing-sign">Con todo mi cariño.</span></section>
   </main>
 
-  <footer class="site-footer"><a class="brand" href="#inicio"><span class="brand-symbol">t.</span><span>hecho especialmente para <strong>Toñi</strong></span></a><span>26 · 11 · 2026 <i>♡</i></span><button class="footer-secret" id="footerSecret">un último detalle</button></footer>
+  <footer class="site-footer"><a class="brand" href="#inicio"><span class="brand-symbol">t.</span><span>hecho especialmente para <strong>Mama</strong></span></a><span>26 · 11 · 2026 <i>♡</i></span><button class="footer-secret" id="footerSecret">un último detalle</button></footer>
 
   <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-backdrop" data-close-modal></div><div class="modal-panel"><button class="modal-close" data-close-modal aria-label="Cerrar">×</button><div class="modal-content" id="modalContent"></div></div></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
